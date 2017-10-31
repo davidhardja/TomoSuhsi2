@@ -1,0 +1,35 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="ButtonStandard">
+        <item name="android:background">@drawable/btn_round</item>
+        <item name="android:textColor">@color/cfffff</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="StyleDialog" parent="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+        <item name="android:windowAnimationStyle">@style/StyleAnimDialog</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="StyleAnimDialog">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="Border">
+        <item name="android:background">@color/cfffff</item>
+    </style>
+
+    <style name="BackgroundDialog">
+        <item name="android:background">@drawable/background_dialog</item>
+    </style>
+</resources>

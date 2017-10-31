@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_wrapper"
+    android:background="@color/cF9AD9D"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            style="@style/Border" />
+
+        <Button
+            android:id="@+id/ib_remove"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textColor="@color/cfffff"
+            android:text="X"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/background_button_delete" />
+
+        <ImageView
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            style="@style/Border" />
+
+        <TextView
+            android:id="@+id/tv_no"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            style="@style/Border"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Sushi A"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            style="@style/Border"/>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/b_plus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/background_button_quantity"
+                android:text="@string/plus" />
+
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="2"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/b_minus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/background_button_quantity"
+                android:text="@string/minus" />
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            style="@style/Border"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        style="@style/Border" />
+
+</LinearLayout>

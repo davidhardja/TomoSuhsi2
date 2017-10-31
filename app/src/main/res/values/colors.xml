@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="c616468">#616468</color>
+    <color name="c000000">#000000</color>
+    <color name="cb0000000">#B0000000</color>
+    <color name="cf2b68c">#f2b68c</color>
+    <color name="cfffff">#ffffff</color>
+    <color name="c959595">#959595</color>
+    <color name="cb57548">#b57548</color>
+    <color name="c00ffffff">#00FFFFFF</color>
+    <color name="cfcdcbd">#fcdcbd</color>
+    <color name="icon_enabled">#FFFFFFFF</color>
+    <color name="icon_disabled">#FF000000</color>
+    <color name="c6C0000">#6C0000</color>
+    <color name="cF08A5D">#F08A5D</color>
+    <color name="cF9ED69">#F9ED69</color>
+
+
+    <!--Sushi 3-->
+    <color name="cF25566">#F25566</color>
+    <color name="cD02126">#D02126</color>
+    <color name="cF6851F">#F6851F</color>
+    <color name="cF9AD9D">#F9AD9D</color>
+    <color name="c1F121C">#1F121C</color>
+    <color name="cF28888">#F28888</color>
+    <color name="cADF288">#ADF288</color>
+
+    <color name="book_loading_background">@color/cF28888</color>
+    <color name="book_loading_book">@color/cfffff</color>
+    <color name="book_loading_page">@color/cF9AD9D</color>
+</resources>
