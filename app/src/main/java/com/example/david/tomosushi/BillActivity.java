@@ -100,7 +100,7 @@ public class BillActivity extends BaseActivity {
         menusList.clear();
 
         showLoading();
-        Call<CallbackWrapper> call = getService().getReceipt(getSession().getNoMeja(),getSession().getNoMeja(),"DINE_IN");
+        Call<CallbackWrapper> call = getService().getReceipt(getSession().getNoMeja(),getSession().getNoMeja());
         call.enqueue(new Callback<CallbackWrapper>() {
             @Override
             public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
@@ -116,22 +116,35 @@ public class BillActivity extends BaseActivity {
                         menusList.add(menu);
                     }
                     billAdapter.notifyDataSetChanged();
-                    try{
-                        SpannableStringBuilder builderTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.total_harga), dataBon.trans.getTotal()));
-                        tvTotal.setText(builderTotal);
-                        SpannableStringBuilder builderGrandTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.grand_total_harga), dataBon.trans.getGrandtotal()));
-                        tvGrandTotal.setText(builderGrandTotal);
-                        SpannableStringBuilder builderService = new SpannableStringBuilder(MessageFormat.format(getString(R.string.service), dataBon.trans.getService()));
-                        tvService.setText(builderService);
-                        SpannableStringBuilder builderNoMeja = new SpannableStringBuilder(MessageFormat.format(getString(R.string.no_meja),dataBon.trans.getNo_meja()));
-                        tvNoMeja.setText(builderNoMeja);
-                        SpannableStringBuilder builderDiskon= new SpannableStringBuilder(MessageFormat.format(getString(R.string.diskon), dataBon.trans.getDiskon()));
-                        tvDiskon.setText(builderDiskon);
-                        SpannableStringBuilder builderPpn = new SpannableStringBuilder(MessageFormat.format(getString(R.string.ppn), dataBon.trans.getPpn()));
-                        tvPpn.setText(builderPpn);
-                    }catch (Exception e){
 
-                    }
+                   // if(dataBon.trans!=null){
+//                        SpannableStringBuilder builderTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.total_harga), dataBon.trans.getTotal()));
+//                        tvTotal.setText(builderTotal);
+//                        SpannableStringBuilder builderGrandTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.grand_total_harga), dataBon.trans.getGrandtotal()));
+//                        tvGrandTotal.setText(builderGrandTotal);
+//                        SpannableStringBuilder builderService = new SpannableStringBuilder(MessageFormat.format(getString(R.string.service), dataBon.trans.getService()));
+//                        tvService.setText(builderService);
+//                        SpannableStringBuilder builderNoMeja = new SpannableStringBuilder(MessageFormat.format(getString(R.string.no_meja),dataBon.trans.getNo_meja()));
+//                        tvNoMeja.setText(builderNoMeja);
+//                        SpannableStringBuilder builderPpn = new SpannableStringBuilder(MessageFormat.format(getString(R.string.ppn), dataBon.trans.getPpn()));
+//                        tvPpn.setText(builderPpn);
+                    //}else{
+                        int total = 0;
+                        for (int i=0;i<menusList.size();i++){
+                            total = total + (menusList.get(i).harga);
+                        }
+                        SpannableStringBuilder builderTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.total_harga), total));
+                        tvTotal.setText(builderTotal);
+                        double service = total*0.05;
+                        SpannableStringBuilder builderService = new SpannableStringBuilder(MessageFormat.format(getString(R.string.service), service));
+                        tvService.setText(builderService);
+                        double ppn = (total+service)*0.1;
+                        SpannableStringBuilder builderPpn = new SpannableStringBuilder(MessageFormat.format(getString(R.string.ppn),ppn));
+                        tvPpn.setText(builderPpn);
+                        double grandTotal = total + service + ppn;
+                        SpannableStringBuilder builderGrandTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.grand_total_harga), grandTotal));
+                        tvGrandTotal.setText(builderGrandTotal);
+                    //}
                     hideLoading();
                 }else{
                     hideLoading();

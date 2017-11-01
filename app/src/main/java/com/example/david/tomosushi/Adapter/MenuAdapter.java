@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.david.tomosushi.Common.Constant;
 import com.example.david.tomosushi.Database.Data.Menus;
 import com.example.david.tomosushi.R;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.grantland.widget.AutofitHelper;
 
 /**
@@ -70,7 +72,7 @@ public class MenuAdapter extends com.example.david.tomosushi.Adapter.BaseAdapter
             tvName.setText(menus.getName());
             SpannableStringBuilder builder = new SpannableStringBuilder(MessageFormat.format(context.getString(R.string.rupiah), menus.getHarga()));
             tvPrice.setText(builder);
-            Glide.with(context).load(menus.picture_url).placeholder(R.drawable.ic_sushi).into(ivMenu);
+            Glide.with(context).load(menus.picture_url).placeholder(R.drawable.ic_sushi).bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, 30, 0)).into(ivMenu);
         }
 
         @Override
@@ -106,17 +108,17 @@ public class MenuAdapter extends com.example.david.tomosushi.Adapter.BaseAdapter
 
             final Menus menus = menusList.get(getAdapterPosition());
             final Menus temp = new Menus();
-            Glide.with(context).load(menus.picture_url).placeholder(R.drawable.ic_sushi).into(ivMenu);
+            Glide.with(context).load(menus.picture_url).placeholder(R.drawable.ic_sushi).bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, 30, 0)).into(ivMenu);
             tvName.setText(menus.getName());
             tvDescription.setText(menus.getKeterangan());
 
-            if(menus.getModifier().size()!=0){
+            if(menus.getModifier().size()>1){
                 msModifier.setVisibility(View.VISIBLE);
                 msModifier.setItems(menus.getModifier());
                 msModifier.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
                     @Override
                     public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                        menus.setMod(item);
+                        menus.setMod(item+"||");
                     }
                 });
             }else{
@@ -152,11 +154,11 @@ public class MenuAdapter extends com.example.david.tomosushi.Adapter.BaseAdapter
 
                     if (find) {
                         Constant.cart.get(position).setQuantity(Constant.cart.get(position).getQuantity() + Integer.valueOf(etQuantity.getText().toString()));
-                        Constant.cart.get(position).setKeterangan(etNote.getText().toString());
+                        Constant.cart.get(position).setMod(etNote.getText().toString());
                     } else {
                         if (Integer.valueOf(etQuantity.getText().toString()) > 0) {
                             menus.setQuantity(Integer.valueOf(etQuantity.getText().toString()));
-                            menus.setKeterangan(etNote.getText().toString());
+                            menus.setMod(menus.getMod()+etNote.getText().toString());
                             Constant.cart.add(menus);
                         }
                     }

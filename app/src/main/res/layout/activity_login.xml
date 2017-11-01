@@ -53,6 +53,18 @@
             android:textSize="20sp"
             android:textColor="@color/cfffff"
             android:text="@string/exit"
+            android:layout_margin="5dp"
+            />
+
+        <Button
+            android:layout_margin="5dp"
+            android:id="@+id/b_setting"
+            android:background="@drawable/background_button_cancel"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:textSize="20sp"
+            android:textColor="@color/cfffff"
+            android:text="@string/setting"
             />
 
     </LinearLayout>

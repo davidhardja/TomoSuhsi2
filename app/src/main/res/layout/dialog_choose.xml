@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_wrapper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl_wrapper"
     android:background="@color/cb0000000"
     android:orientation="vertical">
 
     <LinearLayout
-        android:clickable="true"
+        style="@style/BackgroundDialog"
         android:layout_width="800dp"
         android:layout_height="500dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        style="@style/BackgroundDialog"
+        android:clickable="true"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_menu"
             android:layout_width="470dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="30dp"
             android:layout_height="match_parent"
+            android:layout_marginBottom="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/ic_sushi" />
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingStart="10dp"
+            android:paddingBottom="10dp"
             android:paddingEnd="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingStart="10dp"
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/tv_name"
@@ -44,25 +44,26 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="SUSHI A"
-                android:textColor="@color/c959595"
+                android:textColor="@color/c000000"
                 android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
-                android:layout_height="150dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="10dp"
                 android:gravity="center|top"
                 android:text="is simply dummy text of the printing and typesetting industry asdsa  asdsa asd"
-                android:textColor="@color/c959595"
+                android:textColor="@color/c000000"
                 android:textSize="16sp" />
 
             <LinearLayout
-                android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -73,10 +74,9 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/quantity"
-                    android:textColor="@color/c959595" />
+                    android:textColor="@color/c000000" />
 
                 <EditText
-                    android:textColor="@color/c959595"
                     android:id="@+id/et_quantity"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
@@ -87,24 +87,25 @@
                     android:paddingBottom="0dp"
                     android:paddingTop="0dp"
                     android:text="@string/zero"
+                    android:textColor="@color/c000000"
                     android:textSize="16sp" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_gravity=""
                     android:layout_height="match_parent"
+                    android:layout_gravity=""
                     android:layout_weight="0.8">
 
                     <Button
-                        android:textColor="@color/cfffff"
-                        android:layout_centerHorizontal="true"
                         android:id="@+id/b_plus"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
+                        android:layout_centerHorizontal="true"
                         android:background="@drawable/background_button_quantity"
-                        android:text="@string/plus" />
+                        android:text="@string/plus"
+                        android:textColor="@color/cfffff"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -113,24 +114,25 @@
                     android:layout_weight="0.8">
 
                     <Button
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/cfffff"
-                        android:layout_centerHorizontal="true"
                         android:id="@+id/b_minus"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
                         android:background="@drawable/background_button_quantity"
-                        android:text="@string/minus" />
+                        android:text="@string/minus"
+                        android:textColor="@color/cfffff"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
             </LinearLayout>
 
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/ms_modifier"
-                android:layout_margin="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:textColor="@color/c000000" />
 
             <EditText
                 android:id="@+id/et_note"
@@ -138,13 +140,14 @@
                 android:layout_height="80dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:imeOptions="actionDone"
-                android:maxLines="3"
-                android:inputType="text"
-                android:textColor="@color/c959595"
                 android:background="@drawable/background_edit_text"
                 android:gravity="left"
                 android:hint="@string/note"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="3"
+                android:textColor="@color/c000000"
+                android:textColorHint="@color/c959595"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -159,8 +162,8 @@
                     android:layout_weight="1">
 
                     <Button
-                        style="@style/ButtonStandard"
                         android:id="@+id/b_add"
+                        style="@style/ButtonStandard"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
@@ -176,8 +179,8 @@
                     android:layout_weight="1">
 
                     <Button
-                        style="@style/ButtonStandard"
                         android:id="@+id/b_cancel"
+                        style="@style/ButtonStandard"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"

@@ -67,11 +67,10 @@ public interface ApiService {
             @Query("no_meja") String noMeja
     );
 
-    @GET("public/api/getbon/{no_meja}/yes/{creator}/{jenis}")
+    @GET("public/api/getbon/{no_meja}/yes/{creator}")
     Call<CallbackWrapper> getReceipt(
             @Path("no_meja") String noMeja,
-            @Path("creator") String creator,
-            @Path("jenis") String jenis
+            @Path("creator") String creator
     );
 
     @GET("public/api/callwaiter/{id}")

@@ -7,7 +7,8 @@
     <color name="c000000">#000000</color>
     <color name="cb0000000">#B0000000</color>
     <color name="cf2b68c">#f2b68c</color>
-    <color name="cfffff">#ffffff</color>
+    <color name="cfffff">#000000</color>
+    <color name="cwhite">#ffffff</color>
     <color name="c959595">#959595</color>
     <color name="cb57548">#b57548</color>
     <color name="c00ffffff">#00FFFFFF</color>

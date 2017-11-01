@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -104,7 +105,11 @@ public class DrawerFragment extends BaseFragment {
                         m.name = dataList.get(i).nama;
                         m.harga = Integer.valueOf(dataList.get(i).harga);
                         m.picture_url = dataList.get(i).picture_url;
-                        m.modifier = dataList.get(i).modifier;
+                        String str =  dataList.get(i).modifier;
+                        str = str.trim();
+                        str = str.replace("\"","");
+                        String[] strArgs = str.substring(1, str.length() - 1).trim().split("\\s*,\\s*");
+                        m.modifier = Arrays.asList(strArgs);
                         m.keterangan = dataList.get(i).keterangan;
                         m.quantity = 0;
 

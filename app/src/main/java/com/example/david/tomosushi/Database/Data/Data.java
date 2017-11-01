@@ -24,7 +24,7 @@ public class Data {
     public String keterangan;
     public String qty;
     public String picture_url;
-    public List<String> modifier = new ArrayList<>();
+    public String modifier = "";
 
 
 }

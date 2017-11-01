@@ -35,6 +35,8 @@ public class LoginActivity extends BaseActivity {
     IndicatorDots indicatorDots;
     @BindView(R.id.b_exit)
     Button bExit;
+    @BindView(R.id.b_setting)
+    Button bSetting;
 
     @BindView(R.id.rl_wrapper_loading)
     RelativeLayout rlWrapperLoading;
@@ -57,7 +59,19 @@ public class LoginActivity extends BaseActivity {
         finish();
     }
 
+
+    private void goToSettingPage() {
+        Intent intent = new Intent(this, SettingActivity.class);
+        startActivity(intent);
+    }
+
     private void setListener() {
+        bSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToSettingPage();
+            }
+        });
         pinLockView.attachIndicatorDots(indicatorDots);
         pinLockView.setPinLockListener(new PinLockListener() {
             @Override

@@ -155,6 +155,7 @@ public class MainActivity extends BaseActivity {
                         } else {
                             ExpandableBadgeDrawerItem primaryDrawerItem = new ExpandableBadgeDrawerItem().withSelectable(false);
                             primaryDrawerItem.withName(data.nama);
+
                             primaryDrawerItem.withTag(data.id);
                             List<IDrawerItem> subList = new ArrayList<>();
                             for (int j = 0; j < data.subs.size(); j++) {
@@ -191,7 +192,9 @@ public class MainActivity extends BaseActivity {
                         }
                     });
                     result = drawerBuilder.build();
+                    result.getAdapter().withOnlyOneExpandedItem(true);
                     result.openDrawer();
+
                     hideLoading();
                 } else {
                     hideLoading();

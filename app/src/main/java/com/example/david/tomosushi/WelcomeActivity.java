@@ -43,7 +43,7 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
-        customizeFonts(tvWelcome);
+        customizeFonts(tvWelcome,bBack,bGoToMain,bSetting);
 
         setListener();
     }
@@ -84,14 +84,14 @@ public class WelcomeActivity extends BaseActivity {
         bBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToLoginPage();
+                showVerifyBack(1);
             }
         });
 
         bSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showVerifyBack();
+                showVerifyBack(0);
             }
         });
     }
@@ -126,7 +126,7 @@ public class WelcomeActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private void showVerifyBack() {
+    private void showVerifyBack(final int type) {
         final Dialog dialog = new Dialog(this, R.style.StyleDialog);
         dialog.setContentView(R.layout.dialog_password);
         RelativeLayout rlWrapper = dialog.findViewById(R.id.rl_wrapper);
@@ -142,7 +142,11 @@ public class WelcomeActivity extends BaseActivity {
                     public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
                         if (response.isSuccessful() && response.body().getCode().equals(Constant.API_SUCCESS)) {
                             dialog.dismiss();
-                            goToSettingPage();
+                            if(type==0){
+                                goToSettingPage();
+                            }else if(type==1){
+                                goToLoginPage();
+                            }
                         } else {
                             YoYo.with(Techniques.Shake)
                                     .duration(500)

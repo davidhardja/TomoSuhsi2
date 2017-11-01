@@ -139,14 +139,14 @@
     <Button
         android:id="@+id/b_pay"
         style="@style/ButtonStandard"
-        android:layout_width="120dp"
-        android:layout_height="55dp"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="10dp"
         android:text="@string/ok"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
@@ -176,6 +176,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:visibility="gone"
         android:text="diskon"
         android:id="@+id/tv_diskon"
         android:layout_width="wrap_content"

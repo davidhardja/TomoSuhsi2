@@ -37,6 +37,7 @@
             android:textStyle="bold" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/b_setting"
             style="@style/ButtonStandard"
             android:layout_width="wrap_content"

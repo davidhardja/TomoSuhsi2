@@ -68,27 +68,27 @@
     <Button
         android:id="@+id/b_bill"
         style="@style/ButtonStandard"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="5dp"
         android:elevation="4dp"
         android:text="@string/my_order"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/b_call"
         style="@style/ButtonStandard"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="5dp"
         android:layout_toStartOf="@id/b_bill"
         android:elevation="4dp"
         android:text="@string/call_waiter"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <include layout="@layout/layout_loading" />
