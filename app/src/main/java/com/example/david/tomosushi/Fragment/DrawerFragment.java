@@ -1,23 +1,26 @@
 package com.example.david.tomosushi.Fragment;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.david.tomosushi.Adapter.MenuAdapter;
 import com.example.david.tomosushi.Database.Data.CallbackWrapper;
 import com.example.david.tomosushi.Database.Data.Data;
 import com.example.david.tomosushi.Database.Data.Menus;
+import com.example.david.tomosushi.MainActivity;
 import com.example.david.tomosushi.R;
 import com.example.david.tomosushi.Tools.ItemOffsetDecoration;
 import com.example.david.tomosushi.Tools.VarColumnGridLayoutManager;
-
-import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +69,7 @@ public class DrawerFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         ButterKnife.bind(this, view);
         tvTitle.setText(getArguments().getString(TITLE));
-
+        customizeFonts(tvTitle);
         return view;
     }
 
@@ -74,7 +77,7 @@ public class DrawerFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setMenu();
-        if(menusList.size()==0){
+        if (menusList.size() == 0) {
             setData();
         }
     }
@@ -84,19 +87,23 @@ public class DrawerFragment extends BaseFragment {
         if (menuAdapter == null) {
             menuAdapter = new MenuAdapter(getActivity(), menusList);
         }
-        rvMenu.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        //rvMenu.setLayoutManager(new VarColumnGridLayoutManager(getActivity(),GridLayoutManager.VERTICAL,false,TypedValue.COMPLEX_UNIT_DIP,210f));
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getActivity());
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.SPACE_AROUND);
+        rvMenu.setLayoutManager(layoutManager);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.item_offset);
         rvMenu.addItemDecoration(itemDecoration);
         rvMenu.setAdapter(menuAdapter);
 
     }
 
-    private void setData(){
+    private void setData() {
         Call<CallbackWrapper> call = getService().getMenuCategory(getArguments().getString(ID));
         call.enqueue(new Callback<CallbackWrapper>() {
             @Override
             public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<Data> dataList = response.body().getData();
                     menusList.clear();
                     for (int i = 0; i < dataList.size(); i++) {
@@ -105,9 +112,9 @@ public class DrawerFragment extends BaseFragment {
                         m.name = dataList.get(i).nama;
                         m.harga = Integer.valueOf(dataList.get(i).harga);
                         m.picture_url = dataList.get(i).picture_url;
-                        String str =  dataList.get(i).modifier;
+                        String str = dataList.get(i).modifier;
                         str = str.trim();
-                        str = str.replace("\"","");
+                        str = str.replace("\"", "");
                         String[] strArgs = str.substring(1, str.length() - 1).trim().split("\\s*,\\s*");
                         m.modifier = Arrays.asList(strArgs);
                         m.keterangan = dataList.get(i).keterangan;
@@ -118,14 +125,14 @@ public class DrawerFragment extends BaseFragment {
                     }
 
                     System.out.println("SET MENU" + menusList.size());
-                }else {
-                    System.out.println("SET MENU ERROR " +response.errorBody());
+                } else {
+                    System.out.println("SET MENU ERROR " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
-                System.out.println("SET MENU ERROR2 " +throwable.getMessage());
+                System.out.println("SET MENU ERROR2 " + throwable.getMessage());
             }
         });
     }

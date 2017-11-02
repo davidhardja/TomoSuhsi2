@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.andrognito.pinlockview.IndicatorDots;
+import com.andrognito.pinlockview.PinLockListener;
+import com.andrognito.pinlockview.PinLockView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.david.tomosushi.Common.Constant;
@@ -53,6 +56,8 @@ public class MainActivity extends BaseActivity {
     Button bBill;
     @BindView(R.id.b_call)
     Button bCall;
+    @BindView(R.id.b_back)
+    Button bBack;
 
 
     private Drawer result;
@@ -66,9 +71,17 @@ public class MainActivity extends BaseActivity {
         Constant.mainActivity = this;
         setView(savedInstanceState);
         setListener();
+        customizeFonts(bBack,bBill,bCall);
     }
 
     private void setListener() {
+        bBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showVerifyBack();
+            }
+        });
+
         ibChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,5 +238,70 @@ public class MainActivity extends BaseActivity {
     public void hideLoading() {
         rlWrapperLoading.setVisibility(View.GONE);
         rlLoading.stop();
+    }
+
+    private void showVerifyBack() {
+        final Dialog dialog = new Dialog(this, R.style.StyleDialog);
+        dialog.setContentView(R.layout.dialog_password);
+        RelativeLayout rlWrapper = dialog.findViewById(R.id.rl_wrapper);
+        final PinLockView pinLockView = dialog.findViewById(R.id.pin_lock_view);
+        IndicatorDots indicatorDots = dialog.findViewById(R.id.indicator_dots);
+        pinLockView.attachIndicatorDots(indicatorDots);
+        pinLockView.setPinLockListener(new PinLockListener() {
+            @Override
+            public void onComplete(String s) {
+                Call<CallbackWrapper> callLogin = getService().login(s);
+                callLogin.enqueue(new Callback<CallbackWrapper>() {
+                    @Override
+                    public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+                        if (response.isSuccessful() && response.body().getCode().equals(Constant.API_SUCCESS)) {
+                            dialog.dismiss();
+                            finish();
+                        } else {
+                            YoYo.with(Techniques.Shake)
+                                    .duration(500)
+                                    .repeat(1).onEnd(new YoYo.AnimatorCallback() {
+                                @Override
+                                public void call(Animator animator) {
+                                    pinLockView.resetPinLockView();
+                                }
+                            })
+                                    .playOn(pinLockView);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+                        YoYo.with(Techniques.Shake)
+                                .duration(500)
+                                .repeat(1).onEnd(new YoYo.AnimatorCallback() {
+                            @Override
+                            public void call(Animator animator) {
+                                pinLockView.resetPinLockView();
+                            }
+                        })
+                                .playOn(pinLockView);
+                    }
+                });
+            }
+
+            @Override
+            public void onEmpty() {
+
+            }
+
+            @Override
+            public void onPinChange(int i, String s) {
+
+            }
+        });
+
+        rlWrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }
