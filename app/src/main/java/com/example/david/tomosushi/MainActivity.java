@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity {
     long postIdentifier = 0;
     private Drawer result;
     private DrawerBuilder drawerBuilder;
-    private List<String> mImages;
+    private List<String> mImages = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,15 @@ public class MainActivity extends BaseActivity {
         setView(savedInstanceState);
         setListener();
         customizeFonts(bBack, bBill, bCall);
+        for (int i=0;i<3;i++){
+            mImages.add("https://loremflickr.com/320/240");
+        }
+
+
+        dialog = new Dialog(this, R.style.StyleDialog);
+        dialog.setContentView(R.layout.dialog_carousol);
+        countDownTimer = new MyCountDownTimer(getSession().getTimer(), Constant.INTERVAL);
+        countDownTimer.start();
     }
 
     private void setListener() {
@@ -326,7 +335,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void setImageForPosition(int position, ImageView imageView) {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                //imageView.setImageResource(sampleImages[position]);
 
                 Glide.with(getApplicationContext())
                         .load(mImages.get(position))
@@ -388,11 +396,14 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onFinish() {
-            showCarousol();
+            try{
+                showCarousol();
+            }catch (Exception e){}
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
+
         }
     }
 }
