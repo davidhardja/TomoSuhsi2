@@ -53,4 +53,5 @@ dependencies {
     compile 'com.victor:lib:1.0.4'
     compile 'com.jaredrummler:material-spinner:1.2.1'
     compile 'com.google.android:flexbox:0.3.1'
+    compile 'com.synnapps:carouselview:0.1.4'
 }

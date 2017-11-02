@@ -1,10 +1,10 @@
 package com.example.david.tomosushi;
 
 import android.animation.Animator;
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
 import com.andrognito.pinlockview.PinLockView;
+import com.bumptech.glide.Glide;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.david.tomosushi.Common.Constant;
@@ -30,6 +31,8 @@ import com.mikepenz.materialdrawer.model.ExpandableBadgeDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 import com.victor.loading.book.BookLoading;
 
 import java.util.ArrayList;
@@ -58,11 +61,13 @@ public class MainActivity extends BaseActivity {
     Button bCall;
     @BindView(R.id.b_back)
     Button bBack;
-
-
+    Dialog dialog;
+    MyCountDownTimer countDownTimer;
+    long postIdentifier = 0;
     private Drawer result;
     private DrawerBuilder drawerBuilder;
-    long postIdentifier = 0;
+    private List<String> mImages;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +76,7 @@ public class MainActivity extends BaseActivity {
         Constant.mainActivity = this;
         setView(savedInstanceState);
         setListener();
-        customizeFonts(bBack,bBill,bCall);
+        customizeFonts(bBack, bBill, bCall);
     }
 
     private void setListener() {
@@ -136,7 +141,6 @@ public class MainActivity extends BaseActivity {
         dialog.show();
     }
 
-
     private void setView(final Bundle savedInstanceState) {
 
         setSupportActionBar(toolbar);
@@ -187,12 +191,12 @@ public class MainActivity extends BaseActivity {
                         public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                             if (drawerItem != null) {
                                 if (drawerItem.isSelectable()) {
-                                    if(drawerItem.getType() == Constant.PRIMARY ){
+                                    if (drawerItem.getType() == Constant.PRIMARY) {
                                         PrimaryDrawerItem item = (PrimaryDrawerItem) drawerItem;
                                         String name = item.getName().getText().toString();
                                         Fragment f = DrawerFragment.newInstance(name, String.valueOf(drawerItem.getTag()));
                                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, f).commit();
-                                    }else if(drawerItem.getType() == Constant.SECONDARY ){
+                                    } else if (drawerItem.getType() == Constant.SECONDARY) {
                                         SecondaryDrawerItem item = (SecondaryDrawerItem) drawerItem;
                                         postIdentifier = item.getIdentifier();
                                         String name = item.getName().getText().toString();
@@ -250,9 +254,9 @@ public class MainActivity extends BaseActivity {
         pinLockView.setPinLockListener(new PinLockListener() {
             @Override
             public void onComplete(String s) {
-                if(s.matches(Constant.MASTER_PASSWORD)){
+                if (s.matches(Constant.MASTER_PASSWORD)) {
                     finish();
-                }else{
+                } else {
                     Call<CallbackWrapper> callLogin = getService().login(s);
                     callLogin.enqueue(new Callback<CallbackWrapper>() {
                         @Override
@@ -307,5 +311,88 @@ public class MainActivity extends BaseActivity {
             }
         });
         dialog.show();
+    }
+
+    private void showCarousol() {
+
+        final CarouselView carouselView = dialog.findViewById(R.id.carouselView);
+        ImageButton ibNext = dialog.findViewById(R.id.ib_next);
+        ImageButton ibBefore = dialog.findViewById(R.id.ib_before);
+        ImageButton ibClose = dialog.findViewById(R.id.ib_close);
+
+        carouselView.setPageCount(mImages.size());
+
+        final ImageListener imageListener = new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                //imageView.setImageResource(sampleImages[position]);
+
+                Glide.with(getApplicationContext())
+                        .load(mImages.get(position))
+                        .centerCrop()
+                        .into(imageView);
+
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        countDownTimer.start();
+                        dialog.dismiss();
+                    }
+                });
+
+            }
+        };
+
+        ibClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countDownTimer.cancel();
+                countDownTimer.start();
+                dialog.dismiss();
+            }
+        });
+
+        ibNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (carouselView.getCurrentItem() < mImages.size()) {
+                    carouselView.setCurrentItem(carouselView.getCurrentItem() + 1);
+                }
+            }
+        });
+
+        ibBefore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (carouselView.getCurrentItem() > 0) {
+                    carouselView.setCurrentItem(carouselView.getCurrentItem() - 1);
+                }
+            }
+        });
+
+        carouselView.setImageListener(imageListener);
+
+        if (Constant.SHOW_SCREENSAVER) {
+            dialog.show();
+        } else {
+            countDownTimer.cancel();
+            countDownTimer.start();
+        }
+    }
+
+    public class MyCountDownTimer extends CountDownTimer {
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+
+        @Override
+        public void onFinish() {
+            //showCarousol();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
     }
 }
