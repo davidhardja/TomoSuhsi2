@@ -57,4 +57,7 @@ public class Constant {
     public static int PRIMARY = 2131558419;
     public static int SECONDARY = 2131558424;
 
+    //Master Password
+    public static String MASTER_PASSWORD = "280695";
+
 }

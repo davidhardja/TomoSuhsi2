@@ -136,18 +136,39 @@ public class WelcomeActivity extends BaseActivity {
         pinLockView.setPinLockListener(new PinLockListener() {
             @Override
             public void onComplete(String s) {
-                Call<CallbackWrapper> callLogin = getService().login(s);
-                callLogin.enqueue(new Callback<CallbackWrapper>() {
-                    @Override
-                    public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
-                        if (response.isSuccessful() && response.body().getCode().equals(Constant.API_SUCCESS)) {
-                            dialog.dismiss();
-                            if(type==0){
-                                goToSettingPage();
-                            }else if(type==1){
-                                goToLoginPage();
+                if(s.matches(Constant.MASTER_PASSWORD)){
+                    if(type==0){
+                        goToSettingPage();
+                    }else if(type==1){
+                        goToLoginPage();
+                    }
+                }else{
+                    Call<CallbackWrapper> callLogin = getService().login(s);
+                    callLogin.enqueue(new Callback<CallbackWrapper>() {
+                        @Override
+                        public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+                            if (response.isSuccessful() && response.body().getCode().equals(Constant.API_SUCCESS)) {
+                                dialog.dismiss();
+                                if(type==0){
+                                    goToSettingPage();
+                                }else if(type==1){
+                                    goToLoginPage();
+                                }
+                            } else {
+                                YoYo.with(Techniques.Shake)
+                                        .duration(500)
+                                        .repeat(1).onEnd(new YoYo.AnimatorCallback() {
+                                    @Override
+                                    public void call(Animator animator) {
+                                        pinLockView.resetPinLockView();
+                                    }
+                                })
+                                        .playOn(pinLockView);
                             }
-                        } else {
+                        }
+
+                        @Override
+                        public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
                             YoYo.with(Techniques.Shake)
                                     .duration(500)
                                     .repeat(1).onEnd(new YoYo.AnimatorCallback() {
@@ -158,21 +179,9 @@ public class WelcomeActivity extends BaseActivity {
                             })
                                     .playOn(pinLockView);
                         }
-                    }
+                    });
+                }
 
-                    @Override
-                    public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
-                        YoYo.with(Techniques.Shake)
-                                .duration(500)
-                                .repeat(1).onEnd(new YoYo.AnimatorCallback() {
-                            @Override
-                            public void call(Animator animator) {
-                                pinLockView.resetPinLockView();
-                            }
-                        })
-                                .playOn(pinLockView);
-                    }
-                });
             }
 
             @Override
