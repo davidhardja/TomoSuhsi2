@@ -20,6 +20,7 @@ public class SessionManagement {
     private static final String KEY_TIMER = "TIMER";
     private static final String KEY_WELCOME = "WELCOME";
     private static final String NO_MEJA = "NO_MEJA";
+    private static final String BASE_URL = "BASE_URL";
 
 
     public SessionManagement(Context context){
@@ -27,6 +28,15 @@ public class SessionManagement {
         preferences = _context.getSharedPreferences(PREF_NAME,PRIVATE_MODE);
         editor = preferences.edit();
         editor.apply();
+    }
+
+    public void setBaseURL(String s){
+        preferences.edit().putString(BASE_URL,s).apply();
+        editor.commit();
+    }
+
+    public String getBaseUrl(){
+        return preferences.getString(BASE_URL,Constant.API_URL);
     }
 
     public void setTimer(long timer) {

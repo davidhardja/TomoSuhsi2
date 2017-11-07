@@ -31,8 +31,10 @@ public class Application extends MultiDexApplication {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
+        session = new SessionManagement(this);
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.API_URL)
+                .baseUrl(getSession().getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
@@ -41,7 +43,7 @@ public class Application extends MultiDexApplication {
 
         helper = new DatabaseHelper(this);
 
-        session = new SessionManagement(this);
+
     }
 
     @Override
@@ -60,5 +62,20 @@ public class Application extends MultiDexApplication {
 
     public SessionManagement getSession() {
         return session;
+    }
+
+    public void changeBaseUrl(String s){
+        session.setBaseURL(s);
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(s)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+        service = retrofit.create(ApiService.class);
     }
 }
